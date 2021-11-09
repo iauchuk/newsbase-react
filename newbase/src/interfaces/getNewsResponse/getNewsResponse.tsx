@@ -43,8 +43,8 @@ export interface NewsItem {
   origin: Origin;
   title: string;
   author: string;
-  crawled: any;
-  published: any;
+  crawled: number;
+  published: number;
   summary: Summary;
   alternate: Alternate2[];
   visual: Visual;
