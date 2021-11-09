@@ -8,12 +8,12 @@ const NewsPage = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    getNewsAction()(dispatch);
+    setTimeout(getNewsAction()(dispatch), 400);
   }, [dispatch]);
 
   const newsList = useSelector((state) => state.news);
   const isNewsListExist = _.size(newsList) > 0;
-  console.log("newsPage", newsList);
+
   return (
     <div>{isNewsListExist ? <NewsTable items={newsList} /> : <p>Empty</p>}</div>
   );

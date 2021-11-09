@@ -1,12 +1,12 @@
 import React from "react";
 import { GetNewsResponse } from "../../../interfaces/getNewsResponse/getNewsResponse";
 import { checkArray, isPresent } from "../../../helpers/helpers";
-import { DataGrid } from "@mui/x-data-grid";
 import { CustomTable } from "../../customTable/customTable";
+import { NewsColumnConfigInterface } from "../../../interfaces/newsInterfaces/newsColumnConfigInterface";
 
-const columnConfig = [
-  { field: "language", headerName: "language", minWidth: 200 },
-  { field: "id", headerName: "id", minWidth: 200 },
+const columnConfig: NewsColumnConfigInterface[] = [
+  { field: "lang", headerName: "language", minWidth: 200 },
+  { field: "fieldId", headerName: "id", minWidth: 200 },
   { field: "fingerprint", headerName: "fingerprint", minWidth: 200 },
   { field: "keywords", headerName: "keywords", minWidth: 200 },
   { field: "originId", headerName: "originId", minWidth: 200 },
@@ -15,7 +15,7 @@ const columnConfig = [
   { field: "author", headerName: "author", minWidth: 200 },
   { field: "crawled", headerName: "crawled", minWidth: 200 },
   { field: "published", headerName: "published", minWidth: 200 },
-  { field: "summary", headerName: "summary", minWidth: 200 },
+  { field: "summary", headerName: "summary", maxWidth: 800 },
   { field: "alternate", headerName: "alternate", minWidth: 200 },
   { field: "visual", headerName: "visual", minWidth: 200 },
   { field: "canonicalUrl", headerName: "canonicalUrl", minWidth: 200 },
@@ -32,15 +32,8 @@ const NewsTable = (props: GetNewsResponse) => {
   }
 
   return (
-    <div style={{ height: 520, width: "100%" }}>
-      <CustomTable
-        rows={props.items}
-        columns={columnConfig}
-        autoPageSize={true}
-        pageSize={10}
-        rowsPerPageOptions={[10]}
-        loading={props.items.length === 0}
-      />
+    <div>
+      <CustomTable rows={props.items} columns={columnConfig} />
     </div>
   );
 };
