@@ -1,6 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import initialState from "../initialState";
-import { getNewsAction } from "../actions/actions";
+import {
+  changeUsersInfo,
+  getNewsAction,
+  getUsersInfo,
+} from "../actions/actions";
 
 export const reducerName = "newsReducer";
 
@@ -26,6 +30,43 @@ const newsSlice = createSlice({
       return {
         ...state,
         isNewsLoading: false,
+      };
+    },
+    [getUsersInfo.pending]: (state) => {
+      return {
+        ...state,
+        isUsersLoading: true,
+      };
+    },
+    [getUsersInfo.fulfilled]: (state, action) => {
+      return {
+        ...state,
+        users: action.payload,
+        isUsersLoading: false,
+      };
+    },
+    [getUsersInfo.rejected]: (state) => {
+      return {
+        ...state,
+        isUsersLoading: false,
+      };
+    },
+    [changeUsersInfo.pending]: (state) => {
+      return {
+        ...state,
+        isUsersChanging: true,
+      };
+    },
+    [changeUsersInfo.fulfilled]: (state, action) => {
+      return {
+        ...state,
+        isUsersChanging: false,
+      };
+    },
+    [changeUsersInfo.rejected]: (state) => {
+      return {
+        ...state,
+        isUsersChanging: false,
       };
     },
   },

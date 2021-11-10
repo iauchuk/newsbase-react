@@ -1,7 +1,7 @@
 import * as React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Dashboard from "../dashboard/dashboard";
-import UsersInfo from "../usersInfo/usersInfo";
+import { UsersInfo } from "../usersInfo/usersInfo";
 
 const Routing = () => {
   return (

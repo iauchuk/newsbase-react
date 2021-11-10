@@ -1,6 +1,6 @@
 import { NewsItem } from "../getNewsResponse/getNewsResponse";
 
-export interface GetNewsActionModel {
+export interface GetNewsActionInterface {
   type: string;
   payload: NewsItem[];
 }

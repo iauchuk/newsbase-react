@@ -1,0 +1,27 @@
+.dialog-wrapper .MuiDialog-paper {
+    background: white;
+    width: 100%;
+    padding: 20px 30px;
+}
+
+.dialog-wrapper .MuiDialog-paper form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    text-align: center;
+}
+
+.MuiButtonBase-root.primary-button {
+    background: darkblue;
+    color: white;
+    text-align: center;
+    border-radius: 16px;
+    box-shadow: none;
+    padding: 12px 24px;
+}
+
+.MuiTextField-root.input-wrapper{
+    width: 100%;
+    margin-bottom: 24px;
+}
