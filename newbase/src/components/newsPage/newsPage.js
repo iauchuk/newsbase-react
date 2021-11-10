@@ -8,7 +8,7 @@ const NewsPage = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setTimeout(getNewsAction()(dispatch), 400);
+    getNewsAction()(dispatch);
   }, [dispatch]);
 
   const newsList = useSelector((state) => state.news);
