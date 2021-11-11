@@ -1,27 +1,21 @@
 import React from "react";
-import { Box } from "@mui/material";
-import Typography from "@mui/material/Typography";
-import { useNavigate } from "react-router-dom";
+import "./header.scss";
+import { NavLink } from "react-router-dom";
+import { headerLabels } from "./header.labels";
 
 const Header = () => {
-  const navigate = useNavigate();
-  const goToNewsPage = () => {
-    navigate(`/`);
-  };
-
-  const goToUsersInfoPage = () => {
-    navigate(`/users-info`);
-  };
+  const setActive = ({ isActive }: any) =>
+    isActive ? "header-item active" : "header-item";
 
   return (
-    <Box sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
-      <Typography sx={{ minWidth: 100 }} onClick={goToNewsPage}>
-        News
-      </Typography>
-      <Typography sx={{ minWidth: 100 }} onClick={goToUsersInfoPage}>
-        Profile
-      </Typography>
-    </Box>
+    <div className="header">
+      <NavLink to="/" className={setActive}>
+        {headerLabels.news}
+      </NavLink>
+      <NavLink to="/users-info" className={setActive}>
+        {headerLabels.profile}
+      </NavLink>
+    </div>
   );
 };
 

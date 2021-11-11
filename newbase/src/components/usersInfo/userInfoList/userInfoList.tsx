@@ -2,24 +2,30 @@ import React, { useEffect, useState } from "react";
 import { List, ListItem, ListItemText, Typography } from "@mui/material";
 import * as _ from "lodash";
 import "./userInfoList.css";
-import { changeUsersInfo, getUsersInfo } from "../../../store/actions/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { StoreStateInterface } from "../../../interfaces/storeStateInterface/storeStateInterface";
 import { EditBlock } from "../../editBlock/editBlock";
 import { UserInfoFormDialog } from "../userInfoFormDialog/userInfoFormDialog";
 import { UsersInfoInterface } from "../../../interfaces/usersInfoInterface/usersInfoInterface";
-
-const userInfoInitial = { name: "", surname: "", role: "" };
+import { userInfoInitial } from "../../../constants/appConsts";
+import {
+  changeUsersInfo,
+  getUsersInfo,
+} from "../../../store/userInfo/userInfo.actions";
+import { userInfoListLabels } from "./userInfoList.labels";
 
 export const UserInfoList = () => {
   const dispatch = useDispatch();
   const [statusDialog, setStatusDialog] = useState(false);
   const [editableUser, setEditableUser] = useState(userInfoInitial);
+  const [dialogTitle, setDialogTitle] = useState("");
 
   useEffect(() => {
     getUsersInfo()(dispatch);
   }, [dispatch]);
-  const userInfoList = useSelector((state: StoreStateInterface) => state.users);
+  const userInfoList = useSelector(
+    (state: StoreStateInterface) => state?.users?.usersList
+  );
   const isExistUserInfoList = _.size(userInfoList) > 0;
 
   const handleSubmit = (formValues: UsersInfoInterface) => {
@@ -35,6 +41,7 @@ export const UserInfoList = () => {
   const editUserItem = (id: number) => {
     setEditableUser(_.find(userInfoList, { id: id }) as UsersInfoInterface);
     setStatusDialog(true);
+    setDialogTitle("Edit");
   };
   const deleteUserItem = (id: number): void => {
     const changeUsersList = _.without(
@@ -66,14 +73,19 @@ export const UserInfoList = () => {
           ))}
         </List>
       ) : (
-        <Typography>Empty</Typography>
+        <Typography>{userInfoListLabels.emptyList}</Typography>
       )}
-      <UserInfoFormDialog
-        isOpen={statusDialog}
-        onSubmit={handleSubmit}
-        onClose={handleClose}
-        initValue={editableUser}
-      />
+      {!!editableUser ? (
+        <UserInfoFormDialog
+          isOpen={statusDialog}
+          onSubmit={handleSubmit}
+          onClose={handleClose}
+          initValue={editableUser}
+          dialogTitle={dialogTitle}
+        />
+      ) : (
+        ""
+      )}
     </div>
   );
 };

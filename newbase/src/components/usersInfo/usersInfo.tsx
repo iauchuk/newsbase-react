@@ -1,6 +1,7 @@
 import React from "react";
 import { UserInfoHeader } from "./userInfoHeader/userInfoHeader";
 import { UserInfoList } from "./userInfoList/userInfoList";
+import Header from "../header/header";
 
 export const UsersInfo = () => {
   localStorage.setItem(
@@ -35,7 +36,7 @@ export const UsersInfo = () => {
 
   return (
     <div>
-      <h2>user info</h2>
+      <Header />
       <UserInfoHeader />
       <UserInfoList />
     </div>

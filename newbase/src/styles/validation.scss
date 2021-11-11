@@ -1,0 +1,7 @@
+@import "settings";
+
+.error-message {
+  color: $error-color;
+  margin-bottom: $base-indent*2;
+  text-align: left;
+}

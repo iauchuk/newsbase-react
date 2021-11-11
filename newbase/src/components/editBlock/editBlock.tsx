@@ -1,5 +1,6 @@
 import React from "react";
 import { Button } from "@mui/material";
+import { editBlockLabels } from "./editBlock.labels";
 
 interface EditBlockPropsInterface {
   primaryEvent?: any;
@@ -23,7 +24,7 @@ export const EditBlock = (props: EditBlockPropsInterface) => {
           variant="contained"
           onClick={primaryClick}
         >
-          Edit
+          {editBlockLabels.edit}
         </Button>
       ) : (
         ""
@@ -35,7 +36,7 @@ export const EditBlock = (props: EditBlockPropsInterface) => {
           variant="outlined"
           onClick={secondaryClick}
         >
-          Delete
+          {editBlockLabels.delete}
         </Button>
       ) : (
         ""

@@ -1,10 +1,18 @@
 import { NewsItem } from "../getNewsResponse/getNewsResponse";
 import { UsersInfoInterface } from "../usersInfoInterface/usersInfoInterface";
 
-export interface StoreStateInterface {
-  news?: NewsItem[];
-  users?: UsersInfoInterface[];
+interface usersReducerInterface {
+  usersList: UsersInfoInterface[];
   isUsersLoading?: boolean;
-  isNewsLoading?: boolean;
   isUsersChanging?: boolean;
+}
+
+interface newsReducerInterface {
+  newsList: NewsItem[];
+  isNewsLoading?: boolean;
+}
+
+export interface StoreStateInterface {
+  news?: newsReducerInterface;
+  users?: usersReducerInterface;
 }

@@ -1,5 +1,5 @@
 export interface UsersInfoInterface {
-  id: number;
+  id?: number;
   name: string;
   surname: string;
   role: string;

@@ -2,20 +2,27 @@ import React, { useState } from "react";
 import { Button } from "@mui/material";
 import "./userInfoHeader.css";
 import { UserInfoFormDialog } from "../userInfoFormDialog/userInfoFormDialog";
-import { changeUsersInfo, getUsersInfo } from "../../../store/actions/actions";
 import { useDispatch, useSelector } from "react-redux";
 import * as _ from "lodash";
 import { StoreStateInterface } from "../../../interfaces/storeStateInterface/storeStateInterface";
 import { UsersInfoInterface } from "../../../interfaces/usersInfoInterface/usersInfoInterface";
+import { userInfoInitial } from "../../../constants/appConsts";
+import {
+  changeUsersInfo,
+  getUsersInfo,
+} from "../../../store/userInfo/userInfo.actions";
+import { userInfoHeaderLabel } from "./userInfoHeader.label";
 
 export const UserInfoHeader = () => {
   const dispatch = useDispatch();
   const userInfoList: UsersInfoInterface[] | undefined = useSelector(
-    (state: StoreStateInterface) => state.users
+    (state: StoreStateInterface) => state?.users?.usersList
   );
   const [statusDialog, setStatusDialog] = useState(false);
+  const [dialogTitle, setDialogTitle] = useState("");
   const handleOpenDialog = () => {
     setStatusDialog(true);
+    setDialogTitle("Add");
   };
   /**
    * Так как CRUD делаем на фронте, то делаем такой костыль
@@ -24,16 +31,18 @@ export const UserInfoHeader = () => {
     resolve(null);
   });
 
-  const resolveFunc = (formValues: UsersInfoInterface) => {
+  const resolveFunc = (formValues: any) => {
+    const lastIdInList = _.maxBy(userInfoList, "id");
     // @ts-ignore
-    const lastIdInList = _.maxBy(userInfoList, "id").id;
-    const newItem = { ...formValues, id: lastIdInList + 1 };
+    const newItem = { ...formValues, id: lastIdInList?.id + 1 };
     changeUsersInfo(_.union(userInfoList, [newItem]))(dispatch);
   };
 
   const handleSubmit = (formValues: UsersInfoInterface) => {
-    getUsersInfo()(dispatch);
     setUserPromise
+      .then(() => {
+        getUsersInfo()(dispatch);
+      })
       .then(() => {
         resolveFunc(formValues);
       })
@@ -53,13 +62,19 @@ export const UserInfoHeader = () => {
         className="primary-button"
         onClick={handleOpenDialog}
       >
-        Add
+        {userInfoHeaderLabel.add}
       </Button>
-      <UserInfoFormDialog
-        isOpen={statusDialog}
-        onSubmit={handleSubmit}
-        onClose={handleClose}
-      />
+      {!!userInfoInitial ? (
+        <UserInfoFormDialog
+          isOpen={statusDialog}
+          onSubmit={handleSubmit}
+          onClose={handleClose}
+          initValue={userInfoInitial}
+          dialogTitle={dialogTitle}
+        />
+      ) : (
+        ""
+      )}
     </div>
   );
 };

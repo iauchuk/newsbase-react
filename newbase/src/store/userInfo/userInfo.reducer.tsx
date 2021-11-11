@@ -1,37 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 import initialState from "../initialState";
-import {
-  changeUsersInfo,
-  getNewsAction,
-  getUsersInfo,
-} from "../actions/actions";
+import { changeUsersInfo, getUsersInfo } from "./userInfo.actions";
 
-export const reducerName = "newsReducer";
+export const reducerName = "userInfoReducer";
 
-const newsSlice = createSlice({
+const userInfoSlice = createSlice({
   name: reducerName,
   initialState,
   reducers: {},
   extraReducers: {
-    [getNewsAction.pending]: (state) => {
-      return {
-        ...state,
-        isNewsLoading: true,
-      };
-    },
-    [getNewsAction.fulfilled]: (state, action) => {
-      return {
-        ...state,
-        news: action.payload.items,
-        isNewsLoading: false,
-      };
-    },
-    [getNewsAction.rejected]: (state) => {
-      return {
-        ...state,
-        isNewsLoading: false,
-      };
-    },
     [getUsersInfo.pending]: (state) => {
       return {
         ...state,
@@ -41,7 +18,7 @@ const newsSlice = createSlice({
     [getUsersInfo.fulfilled]: (state, action) => {
       return {
         ...state,
-        users: action.payload,
+        usersList: action.payload,
         isUsersLoading: false,
       };
     },
@@ -72,4 +49,4 @@ const newsSlice = createSlice({
   },
 });
 
-export default newsSlice.reducer;
+export default userInfoSlice.reducer;
