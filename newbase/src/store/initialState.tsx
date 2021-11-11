@@ -1,6 +1,5 @@
 const initialState = {
-  title: "value...",
-  value: "value...",
+  init: true,
 };
 
 export default initialState;

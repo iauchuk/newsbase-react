@@ -5,10 +5,10 @@ import {
   DialogTitle,
   MenuItem,
   Select,
-  SelectChangeEvent,
   TextField,
+  Typography,
 } from "@mui/material";
-import { ErrorMessage, Field, Form, Formik } from "formik";
+import { ErrorMessage, Field, Form, Formik, getIn } from "formik";
 import * as Yup from "yup";
 import "./userInfoFormDialog.css";
 import * as _ from "lodash";
@@ -22,10 +22,11 @@ import { default_regexp } from "../../../constants/appConsts";
 import { isPresent } from "../../../helpers/helpers";
 
 interface FormDialogPropsInterface {
-  isOpen?: any;
-  onSubmit: any;
-  onClose: any;
+  isOpen?: boolean;
+  onSubmit: Function;
+  onClose: Function;
   initValue?: any;
+  dialogTitle?: string;
 }
 
 const validationSchema = Yup.object().shape({
@@ -54,7 +55,7 @@ const selectInitialOptions = [
 ];
 
 export const UserInfoFormDialog = (props: FormDialogPropsInterface) => {
-  const { isOpen, onSubmit, onClose, initValue } = props;
+  const { isOpen, onSubmit, onClose, initValue, dialogTitle } = props;
   const [role, setRole] = React.useState(selectInitialOptions[0].value);
   const formikRef: MutableRefObject<any> = useRef();
 
@@ -62,15 +63,15 @@ export const UserInfoFormDialog = (props: FormDialogPropsInterface) => {
     if (!isPresent(initValue)) {
       return;
     }
-    setRole(initValue.role);
+    setRole(initValue?.role);
   }, [initValue]);
 
   const handleClose = () => {
     onClose(false);
   };
 
-  const handleChange = (event: SelectChangeEvent) => {
-    setRole(event.target.value as string);
+  const isValid = (errors: any, controlName: string): boolean => {
+    return !!getIn(errors, controlName);
   };
 
   const sendForm = (formValues: any) => {
@@ -80,8 +81,14 @@ export const UserInfoFormDialog = (props: FormDialogPropsInterface) => {
   };
 
   return (
-    <Dialog className="dialog-wrapper" onClose={handleClose} open={isOpen}>
-      <DialogTitle>Enter data</DialogTitle>
+    <Dialog
+      className="dialog-wrapper"
+      onClose={handleClose}
+      open={isOpen || false}
+    >
+      <DialogTitle>
+        <Typography>{dialogTitle}</Typography>
+      </DialogTitle>
       <Formik
         innerRef={formikRef}
         initialValues={initValue}
@@ -91,16 +98,17 @@ export const UserInfoFormDialog = (props: FormDialogPropsInterface) => {
           sendForm(values);
         }}
       >
-        {(form) => (
+        {({ values, errors, touched, setFieldValue }) => (
           <Form>
             <Select
-              defaultValue={initValue.role}
+              defaultValue={initValue && initValue.role}
               value={role}
               name="role"
               label="Role"
+              className="select-menu"
               onChange={(e) => {
-                handleChange(e);
-                form.setFieldValue(e.target.name, e.target.value);
+                setRole(e.target.value);
+                setFieldValue(e.target.name, e.target.value);
               }}
             >
               {_.map(selectInitialOptions, (option: any, index: number) => (
@@ -109,7 +117,11 @@ export const UserInfoFormDialog = (props: FormDialogPropsInterface) => {
                 </MenuItem>
               ))}
             </Select>
-            <ErrorMessage name="role" component="div" />
+            <ErrorMessage
+              className="error-message"
+              name="role"
+              component="div"
+            />
             <Field type="text" name="name">
               {({ field }: any) => (
                 <div>
@@ -119,12 +131,21 @@ export const UserInfoFormDialog = (props: FormDialogPropsInterface) => {
                     label="Name"
                     size="small"
                     variant="outlined"
+                    value={values && values.name}
+                    error={touched.name && isValid(errors, "name")}
+                    onChange={(event) =>
+                      setFieldValue("name", event.target.value)
+                    }
                     {...field}
                   />
                 </div>
               )}
             </Field>
-            <ErrorMessage name="name" component="div" />
+            <ErrorMessage
+              className="error-message"
+              name="name"
+              component="div"
+            />
             <Field type="text" name="surname">
               {({ field }: any) => (
                 <div>
@@ -134,12 +155,21 @@ export const UserInfoFormDialog = (props: FormDialogPropsInterface) => {
                     label="Surname"
                     size="small"
                     variant="outlined"
+                    value={values && values.surname}
+                    error={touched.surname && isValid(errors, "surname")}
+                    onChange={(event) =>
+                      setFieldValue("surname", event.target.value)
+                    }
                     {...field}
                   />
                 </div>
               )}
             </Field>
-            <ErrorMessage name="surname" component="div" />
+            <ErrorMessage
+              className="error-message"
+              name="surname"
+              component="div"
+            />
             <Button
               className="primary-button"
               type="submit"

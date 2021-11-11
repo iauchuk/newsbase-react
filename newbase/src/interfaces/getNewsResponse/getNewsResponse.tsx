@@ -62,5 +62,5 @@ export interface GetNewsResponse {
   updated: number;
   direction: string;
   alternate: Alternate[];
-  items: NewsItem[];
+  items: NewsItem[] | undefined;
 }

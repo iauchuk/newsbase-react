@@ -12,15 +12,6 @@
     text-align: center;
 }
 
-.MuiButtonBase-root.primary-button {
-    background: darkblue;
-    color: white;
-    text-align: center;
-    border-radius: 16px;
-    box-shadow: none;
-    padding: 12px 24px;
-}
-
 .MuiTextField-root.input-wrapper{
     width: 100%;
     margin-bottom: 24px;
