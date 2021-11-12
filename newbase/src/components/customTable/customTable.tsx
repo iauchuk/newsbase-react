@@ -6,7 +6,6 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import Typography from "@mui/material/Typography";
 import "./customTable.css";
 import {
   Box,
@@ -22,10 +21,15 @@ import {
 import { TransferBooleanPipe } from "../../pipes/transferBoolean.pipe";
 import { useState } from "react";
 import { TablePaginationInterface } from "../../interfaces/tablePaginationInterface/tablePaginationInterface";
-import { default_time_format } from "../../constants/appConsts";
+import {
+  default_time_format,
+  readingLabelsStatus,
+} from "../../constants/appConsts";
 import { Moment } from "../moment/moment";
 import { NewsColumnConfigInterface } from "../../interfaces/newsInterfaces/newsColumnConfigInterface";
 import { NewsTablePropsInterface } from "../../interfaces/newsInterfaces/newsTablePropsInterface";
+import { customTableLabels } from "./customTable.labels";
+import Typography from "../typography/typography";
 
 export const TablePaginationActions = (props: TablePaginationInterface) => {
   const theme = useTheme();
@@ -51,9 +55,9 @@ export const TablePaginationActions = (props: TablePaginationInterface) => {
         aria-label="previous page"
       >
         {theme.direction === "rtl" ? (
-          <Typography>Next</Typography>
+          <Typography text={customTableLabels.next} />
         ) : (
-          <Typography>Previous</Typography>
+          <Typography text={customTableLabels.prev} />
         )}
       </IconButton>
       <IconButton
@@ -62,9 +66,9 @@ export const TablePaginationActions = (props: TablePaginationInterface) => {
         aria-label="next page"
       >
         {theme.direction === "rtl" ? (
-          <Typography>Previous</Typography>
+          <Typography text={customTableLabels.prev} />
         ) : (
-          <Typography>Next</Typography>
+          <Typography text={customTableLabels.next} />
         )}
       </IconButton>
     </Box>
@@ -103,7 +107,7 @@ export const CustomTable = (props: NewsTablePropsInterface) => {
               {columns.map(
                 (column: NewsColumnConfigInterface, index: number) => (
                   <TableCell key={index} sx={{ maxWidth: column.maxWidth }}>
-                    <Typography>{column.headerName}</Typography>
+                    <Typography text={column.headerName} />
                   </TableCell>
                 )
               )}
@@ -128,7 +132,7 @@ export const CustomTable = (props: NewsTablePropsInterface) => {
                   component="th"
                   scope="row"
                 >
-                  <Typography>{row.language}</Typography>
+                  <Typography text={row.language} />
                 </TableCell>
                 <TableCell
                   align="right"
@@ -139,27 +143,27 @@ export const CustomTable = (props: NewsTablePropsInterface) => {
                     zIndex: 2,
                   }}
                 >
-                  <Typography>{row.id}</Typography>
+                  <Typography text={row.id} />
                 </TableCell>
                 <TableCell align="right">
-                  <Typography>{row.fingerprint}</Typography>
+                  <Typography text={row.fingerprint} />
                 </TableCell>
                 <TableCell align="right">
-                  <Typography>{row.keywords}</Typography>
+                  <Typography text={row.keywords} />
                 </TableCell>
                 <TableCell align="right">
-                  <Typography>{row.originId}</Typography>
+                  <Typography text={row.originId} />
                 </TableCell>
                 <TableCell align="right">
-                  <Typography>{row.origin.htmlUrl}</Typography>
-                  <Typography>{row.origin.streamId}</Typography>
-                  <Typography>{row.origin.title}</Typography>
+                  <Typography text={row.origin.htmlUrl} />
+                  <Typography text={row.origin.streamId} />
+                  <Typography text={row.origin.title} />
                 </TableCell>
                 <TableCell align="right">
-                  <Typography>{row.title}</Typography>
+                  <Typography text={row.title} />
                 </TableCell>
                 <TableCell align="right">
-                  <Typography>{row.author}</Typography>
+                  <Typography text={row.author} />
                 </TableCell>
                 <TableCell align="right">
                   <Moment format={default_time_format} date={row.crawled} />
@@ -168,7 +172,7 @@ export const CustomTable = (props: NewsTablePropsInterface) => {
                   <Moment format={default_time_format} date={row.published} />
                 </TableCell>
                 <TableCell align="right" className="content-cell">
-                  <Typography>{row.summary.content}</Typography>
+                  <Typography text={row.summary.content} />
                 </TableCell>
                 <TableCell align="right">
                   {row.alternate.map((item: Alternate) => (
@@ -190,10 +194,10 @@ export const CustomTable = (props: NewsTablePropsInterface) => {
                   />
                 </TableCell>
                 <TableCell align="right">
-                  <Typography>{row.canonicalUrl}</Typography>
+                  <Typography text={row.canonicalUrl} />
                 </TableCell>
                 <TableCell align="right">
-                  {TransferBooleanPipe(row.unread)}
+                  {TransferBooleanPipe(row.unread, readingLabelsStatus)}
                 </TableCell>
               </TableRow>
             ))}
