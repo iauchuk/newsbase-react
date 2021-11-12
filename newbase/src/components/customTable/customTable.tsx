@@ -25,11 +25,11 @@ import {
   default_time_format,
   readingLabelsStatus,
 } from "../../constants/appConsts";
-import { Moment } from "../moment/moment";
 import { NewsColumnConfigInterface } from "../../interfaces/newsInterfaces/newsColumnConfigInterface";
 import { NewsTablePropsInterface } from "../../interfaces/newsInterfaces/newsTablePropsInterface";
 import { customTableLabels } from "./customTable.labels";
 import Typography from "../typography/typography";
+import {Moment} from "../../helpers/moment/moment";
 
 export const TablePaginationActions = (props: TablePaginationInterface) => {
   const theme = useTheme();
@@ -166,10 +166,10 @@ export const CustomTable = (props: NewsTablePropsInterface) => {
                   <Typography text={row.author} />
                 </TableCell>
                 <TableCell align="right">
-                  <Moment format={default_time_format} date={row.crawled} />
+                  <Typography text={Moment(default_time_format, row.crawled)}/>
                 </TableCell>
                 <TableCell align="right">
-                  <Moment format={default_time_format} date={row.published} />
+                  <Typography text={Moment(default_time_format, row.published)}/>
                 </TableCell>
                 <TableCell align="right" className="content-cell">
                   <Typography text={row.summary.content} />

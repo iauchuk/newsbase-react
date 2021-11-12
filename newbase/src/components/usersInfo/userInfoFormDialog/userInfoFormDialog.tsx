@@ -23,8 +23,8 @@ import Typography from "../../typography/typography";
 
 interface FormDialogPropsInterface {
   isOpen?: boolean;
-  onSubmit: Function;
-  onClose: Function;
+  onSubmit: any;
+  onClose: any;
   initValue?: any;
   dialogTitle?: string;
 }

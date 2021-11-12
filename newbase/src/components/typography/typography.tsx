@@ -2,7 +2,7 @@ import React from "react";
 import "./typography.scss";
 
 interface TypographyProps {
-  text: string | number | string[] | undefined;
+  text: string | number | string[] | undefined | null;
 }
 
 const Typography = (props: TypographyProps) => {
