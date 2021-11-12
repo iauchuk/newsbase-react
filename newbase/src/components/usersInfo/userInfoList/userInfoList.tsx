@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { List, ListItem, ListItemText, Typography } from "@mui/material";
+import { List, ListItem, ListItemText } from "@mui/material";
 import * as _ from "lodash";
 import "./userInfoList.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,6 +13,7 @@ import {
   getUsersInfo,
 } from "../../../store/userInfo/userInfo.actions";
 import { userInfoListLabels } from "./userInfoList.labels";
+import Typography from "../../typography/typography";
 
 export const UserInfoList = () => {
   const dispatch = useDispatch();
@@ -73,7 +74,7 @@ export const UserInfoList = () => {
           ))}
         </List>
       ) : (
-        <Typography>{userInfoListLabels.emptyList}</Typography>
+        <Typography text={userInfoListLabels.emptyList} />
       )}
       {!!editableUser ? (
         <UserInfoFormDialog

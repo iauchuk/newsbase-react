@@ -6,7 +6,6 @@ import {
   MenuItem,
   Select,
   TextField,
-  Typography,
 } from "@mui/material";
 import { ErrorMessage, Field, Form, Formik, getIn } from "formik";
 import * as Yup from "yup";
@@ -20,6 +19,7 @@ import {
 } from "../../../constants/validationConst";
 import { default_regexp } from "../../../constants/appConsts";
 import { isPresent } from "../../../helpers/helpers";
+import Typography from "../../typography/typography";
 
 interface FormDialogPropsInterface {
   isOpen?: boolean;
@@ -87,7 +87,7 @@ export const UserInfoFormDialog = (props: FormDialogPropsInterface) => {
       open={isOpen || false}
     >
       <DialogTitle>
-        <Typography>{dialogTitle}</Typography>
+        <Typography text={dialogTitle} />
       </DialogTitle>
       <Formik
         innerRef={formikRef}

@@ -1,0 +1,9 @@
+@import "src/styles/settings";
+
+.text-wrapper {
+      font-family: "Roboto","Helvetica","Arial",sans-serif;
+    font-weight: 400;
+    font-size: $base-indent + 2;
+    line-height: 1.5;
+    letter-spacing: 0.00938em;
+}

@@ -1,17 +1,25 @@
 import React from "react";
-import { Typography } from "@mui/material";
 import { isPresent } from "../helpers/helpers";
+import Typography from "../components/typography/typography";
 
-export const TransferBooleanPipe = (value: boolean) => {
+interface TransferLabelsInterface {
+  truthy: string;
+  falsy: string;
+}
+
+export const TransferBooleanPipe = (
+  value: boolean,
+  transferLabels: TransferLabelsInterface
+) => {
   if (!isPresent(value)) {
     return;
   }
   return (
     <div>
       {value ? (
-        <Typography>Прочитано</Typography>
+        <Typography text={transferLabels.truthy} />
       ) : (
-        <Typography>Не прочитано</Typography>
+        <Typography text={transferLabels.falsy} />
       )}
     </div>
   );
