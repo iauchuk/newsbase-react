@@ -3,7 +3,7 @@ import { UsersInfoInterface } from "../../interfaces/usersInfoInterface/usersInf
 
 export const getUsersInfo: any = createAsyncThunk(
   "fetchGetUsersInfo",
-  async (userInfo: UsersInfoInterface[]) => {
+  async () => {
     const response = await JSON.parse(
       localStorage.getItem("userInfoList") as string
     );

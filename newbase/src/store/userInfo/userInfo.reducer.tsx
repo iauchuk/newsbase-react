@@ -34,7 +34,7 @@ const userInfoSlice = createSlice({
         isUsersChanging: true,
       };
     },
-    [changeUsersInfo.fulfilled]: (state, action) => {
+    [changeUsersInfo.fulfilled]: (state) => {
       return {
         ...state,
         isUsersChanging: false,
