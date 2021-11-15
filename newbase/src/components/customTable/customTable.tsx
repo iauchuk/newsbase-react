@@ -6,7 +6,6 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import "./customTable.css";
 import {
   Box,
   IconButton,
@@ -30,6 +29,7 @@ import { NewsTablePropsInterface } from "../../interfaces/newsInterfaces/newsTab
 import { customTableLabels } from "./customTable.labels";
 import Typography from "../typography/typography";
 import {Moment} from "../../helpers/moment/moment";
+import styledCustomTable from "./customTable.styles";
 
 export const TablePaginationActions = (props: TablePaginationInterface) => {
   const theme = useTheme();
@@ -79,6 +79,7 @@ export const CustomTable = (props: NewsTablePropsInterface) => {
   const { rows, columns } = props;
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const customTableStyled = styledCustomTable({backgroundHeader: `#0D5CFF`, backgroundFirsts: `lightgrey`});
 
   const handleChangePage = (
     event: React.MouseEvent<HTMLButtonElement> | null,
@@ -96,7 +97,7 @@ export const CustomTable = (props: NewsTablePropsInterface) => {
 
   return (
     <Paper>
-      <TableContainer className="custom-table-wrapper" component={Paper}>
+      <TableContainer className={customTableStyled.customTableWrapper} component={Paper}>
         <Table
           sx={{ minWidth: 650, maxHeight: 500 }}
           aria-label="simple table"
@@ -124,9 +125,6 @@ export const CustomTable = (props: NewsTablePropsInterface) => {
               >
                 <TableCell
                   style={{
-                    position: "sticky",
-                    background: "lightgrey",
-                    zIndex: 2,
                     left: 0,
                   }}
                   component="th"
@@ -137,10 +135,7 @@ export const CustomTable = (props: NewsTablePropsInterface) => {
                 <TableCell
                   align="right"
                   style={{
-                    position: "sticky",
                     left: 99,
-                    background: "lightgrey",
-                    zIndex: 2,
                   }}
                 >
                   <Typography text={row.id} />
@@ -171,7 +166,7 @@ export const CustomTable = (props: NewsTablePropsInterface) => {
                 <TableCell align="right">
                   <Typography text={Moment(default_time_format, row.published)}/>
                 </TableCell>
-                <TableCell align="right" className="content-cell">
+                <TableCell align="right" className={customTableStyled.contentCell}>
                   <Typography text={row.summary.content} />
                 </TableCell>
                 <TableCell align="right">
@@ -188,7 +183,7 @@ export const CustomTable = (props: NewsTablePropsInterface) => {
                 </TableCell>
                 <TableCell align="right">
                   <img
-                    className="custom-table-wrapper--image"
+                    className={customTableStyled.customTableWrapperImage}
                     alt="News view"
                     src={row.visual.url}
                   />
@@ -208,7 +203,7 @@ export const CustomTable = (props: NewsTablePropsInterface) => {
         <TableBody>
           <TableRow>
             <TablePagination
-              className="pagination"
+              className={customTableStyled.pagination}
               rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
               colSpan={3}
               count={rows.length}

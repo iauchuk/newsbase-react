@@ -9,7 +9,6 @@ import {
 } from "@mui/material";
 import { ErrorMessage, Field, Form, Formik, getIn } from "formik";
 import * as Yup from "yup";
-import "./userInfoFormDialog.css";
 import * as _ from "lodash";
 import {
   validationErrorInvalidFormat,
@@ -20,6 +19,10 @@ import {
 import { default_regexp } from "../../../constants/appConsts";
 import { isPresent } from "../../../helpers/helpers";
 import Typography from "../../typography/typography";
+import styledButton from "../../../styles/button.styles";
+import styledSelectMenu from "../../../styles/selectMenu.styles";
+import styledValidation from "../../../styles/validation.styles";
+import styledUserInfoFormDialog from "./userInfoFormDialog.styles";
 
 interface FormDialogPropsInterface {
   isOpen?: boolean;
@@ -58,6 +61,10 @@ export const UserInfoFormDialog = (props: FormDialogPropsInterface) => {
   const { isOpen, onSubmit, onClose, initValue, dialogTitle } = props;
   const [role, setRole] = React.useState(selectInitialOptions[0].value);
   const formikRef: MutableRefObject<any> = useRef();
+  const buttonStyled = styledButton();
+  const userInfoFormDialogStyled = styledUserInfoFormDialog();
+  const selectMenuStyled = styledSelectMenu();
+  const errorMessageStyled = styledValidation({color: `#AF1D1DFF`});
 
   useEffect(() => {
     if (!isPresent(initValue)) {
@@ -82,7 +89,7 @@ export const UserInfoFormDialog = (props: FormDialogPropsInterface) => {
 
   return (
     <Dialog
-      className="dialog-wrapper"
+      className={userInfoFormDialogStyled.dialogWrapper}
       onClose={handleClose}
       open={isOpen || false}
     >
@@ -105,7 +112,7 @@ export const UserInfoFormDialog = (props: FormDialogPropsInterface) => {
               value={role}
               name="role"
               label="Role"
-              className="select-menu"
+              className={selectMenuStyled.selectMenu}
               onChange={(e) => {
                 setRole(e.target.value);
                 setFieldValue(e.target.name, e.target.value);
@@ -118,7 +125,7 @@ export const UserInfoFormDialog = (props: FormDialogPropsInterface) => {
               ))}
             </Select>
             <ErrorMessage
-              className="error-message"
+              className={errorMessageStyled.errorMessage}
               name="role"
               component="div"
             />
@@ -127,7 +134,7 @@ export const UserInfoFormDialog = (props: FormDialogPropsInterface) => {
                 <div>
                   <TextField
                     id="outlined-size-small"
-                    className="input-wrapper"
+                    className={userInfoFormDialogStyled.inputWrapper}
                     label="Name"
                     size="small"
                     variant="outlined"
@@ -142,7 +149,7 @@ export const UserInfoFormDialog = (props: FormDialogPropsInterface) => {
               )}
             </Field>
             <ErrorMessage
-              className="error-message"
+              className={errorMessageStyled.errorMessage}
               name="name"
               component="div"
             />
@@ -151,7 +158,7 @@ export const UserInfoFormDialog = (props: FormDialogPropsInterface) => {
                 <div>
                   <TextField
                     id="outlined-size-small"
-                    className="input-wrapper"
+                    className={userInfoFormDialogStyled.inputWrapper}
                     label="Surname"
                     size="small"
                     variant="outlined"
@@ -166,12 +173,12 @@ export const UserInfoFormDialog = (props: FormDialogPropsInterface) => {
               )}
             </Field>
             <ErrorMessage
-              className="error-message"
+              className={errorMessageStyled.errorMessage}
               name="surname"
               component="div"
             />
             <Button
-              className="primary-button"
+              className={buttonStyled.button}
               type="submit"
               variant="contained"
             >

@@ -1,6 +1,7 @@
 import React from "react";
 import { Button } from "@mui/material";
 import { editBlockLabels } from "./editBlock.labels";
+import styledButton from "../../styles/button.styles";
 
 interface EditBlockPropsInterface {
   primaryEvent?: any;
@@ -9,6 +10,7 @@ interface EditBlockPropsInterface {
 
 export const EditBlock = (props: EditBlockPropsInterface) => {
   const { primaryEvent, secondaryEvent } = props;
+  const editButtonStyle = styledButton();
   const primaryClick = () => {
     primaryEvent();
   };
@@ -20,7 +22,7 @@ export const EditBlock = (props: EditBlockPropsInterface) => {
     <div>
       {primaryEvent ? (
         <Button
-          className="primary-button"
+          className={editButtonStyle.button}
           variant="contained"
           onClick={primaryClick}
         >
@@ -32,7 +34,7 @@ export const EditBlock = (props: EditBlockPropsInterface) => {
 
       {secondaryEvent ? (
         <Button
-          className="secondary-button"
+          className={editButtonStyle.button}
           variant="outlined"
           onClick={secondaryClick}
         >

@@ -1,5 +1,5 @@
 import React from "react";
-import "./typography.scss";
+import styledTypography from "./typography.styles";
 
 interface TypographyProps {
   text: string | number | string[] | undefined | null;
@@ -7,7 +7,8 @@ interface TypographyProps {
 
 const Typography = (props: TypographyProps) => {
   const { text } = props;
-  return <p className="text-wrapper">{text}</p>;
+  const typographyStyle = styledTypography();
+  return <p className={typographyStyle.textWrapper}>{text}</p>;
 };
 
 export default Typography;

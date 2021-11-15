@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { List, ListItem, ListItemText } from "@mui/material";
 import * as _ from "lodash";
-import "./userInfoList.css";
 import { useDispatch, useSelector } from "react-redux";
 import { StoreStateInterface } from "../../../interfaces/storeStateInterface/storeStateInterface";
 import { EditBlock } from "../../editBlock/editBlock";

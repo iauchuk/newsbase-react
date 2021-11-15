@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Button } from "@mui/material";
-import "./userInfoHeader.css";
 import { UserInfoFormDialog } from "../userInfoFormDialog/userInfoFormDialog";
 import { useDispatch, useSelector } from "react-redux";
 import * as _ from "lodash";
@@ -12,9 +11,13 @@ import {
   getUsersInfo,
 } from "../../../store/userInfo/userInfo.actions";
 import { userInfoHeaderLabel } from "./userInfoHeader.label";
+import styledButton from "../../../styles/button.styles";
+import styledUserInfoHeader from "./userInfoHeader.styles";
 
 export const UserInfoHeader = () => {
   const dispatch = useDispatch();
+  const buttonStyled = styledButton();
+  const userInfoHeaderStyled = styledUserInfoHeader();
   const userInfoList: UsersInfoInterface[] | undefined = useSelector(
     (state: StoreStateInterface) => state?.users?.usersList
   );
@@ -56,10 +59,10 @@ export const UserInfoHeader = () => {
   };
 
   return (
-    <div className="table-header">
+    <div className={userInfoHeaderStyled.tableHeader}>
       <Button
         variant="contained"
-        className="primary-button"
+        className={buttonStyled.button}
         onClick={handleOpenDialog}
       >
         {userInfoHeaderLabel.add}
