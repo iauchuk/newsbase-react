@@ -1,6 +1,7 @@
-import React, { Component } from "react";
+import { Component } from "react";
 import "./App.css";
 import Routing from "./components/routing/routing";
+import 'firebase/firestore';
 
 class App extends Component {
   render() {
