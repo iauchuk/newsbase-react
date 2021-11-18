@@ -5,6 +5,8 @@ interface usersReducerInterface {
   usersList: UsersInfoInterface[];
   isUsersLoading?: boolean;
   isUsersChanging?: boolean;
+  isUsersAdding?: boolean;
+  isUserDeleting?: boolean;
 }
 
 interface newsReducerInterface {
@@ -12,7 +14,18 @@ interface newsReducerInterface {
   isNewsLoading?: boolean;
 }
 
+interface rolesReducerInterface {
+  rolesList: any;
+  isRolesLoading?: boolean;
+}
+
+interface newsReducerInterface {
+  userRolesList: NewsItem[];
+  isUserRolesListLoading?: boolean;
+}
+
 export interface StoreStateInterface {
   news?: newsReducerInterface;
   users?: usersReducerInterface;
+  roles?: rolesReducerInterface;
 }

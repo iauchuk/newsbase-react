@@ -17,12 +17,13 @@ import {
   validationErrorShort,
 } from "../../../constants/validationConst";
 import { default_regexp } from "../../../constants/appConsts";
-import { isPresent } from "../../../helpers/helpers";
+// import { isPresent } from "../../../helpers/helpers";
 import Typography from "../../typography/typography";
 import styledButton from "../../../styles/button.styles";
 import styledSelectMenu from "../../../styles/selectMenu.styles";
 import styledValidation from "../../../styles/validation.styles";
 import styledUserInfoFormDialog from "./userInfoFormDialog.styles";
+import { isPresent } from "../../../helpers/helpers";
 
 interface FormDialogPropsInterface {
   isOpen?: boolean;
@@ -30,6 +31,7 @@ interface FormDialogPropsInterface {
   onClose: any;
   initValue?: any;
   dialogTitle?: string;
+  options?: any;
 }
 
 const validationSchema = Yup.object().shape({
@@ -42,36 +44,51 @@ const validationSchema = Yup.object().shape({
     .required(validationErrorRequired),
 });
 
-const selectInitialOptions = [
-  {
-    name: "Admin",
-    value: "admin",
-  },
-  {
-    name: "Editor",
-    value: "editor",
-  },
-  {
-    name: "User",
-    value: "user",
-  },
-];
+// const selectInitialOptions = [
+//   {
+//     name: "Admin",
+//     value: "admin",
+//   },
+//   {
+//     name: "Editor",
+//     value: "editor",
+//   },
+//   {
+//     name: "User",
+//     value: "user",
+//   },
+// ];
 
 export const UserInfoFormDialog = (props: FormDialogPropsInterface) => {
-  const { isOpen, onSubmit, onClose, initValue, dialogTitle } = props;
-  const [role, setRole] = React.useState(selectInitialOptions[0].value);
+  const { isOpen, onSubmit, onClose, initValue, dialogTitle, options } = props;
+  const [role, setRole] = React.useState("");
+  const [selectList, setSelectList] = React.useState();
   const formikRef: MutableRefObject<any> = useRef();
   const buttonStyled = styledButton();
   const userInfoFormDialogStyled = styledUserInfoFormDialog();
   const selectMenuStyled = styledSelectMenu();
-  const errorMessageStyled = styledValidation({color: `#AF1D1DFF`});
+  const errorMessageStyled = styledValidation({ color: `#AF1D1DFF` });
 
   useEffect(() => {
-    if (!isPresent(initValue)) {
+    if (!isPresent(initValue) || !isPresent(options)) {
       return;
     }
+
+    createSelectOptions(options);
     setRole(initValue?.role);
-  }, [initValue]);
+  }, [initValue, options]);
+
+  const createSelectOptions = (value: any) => {
+    const optionList =
+      value &&
+      value.map((item: any) => {
+        return {
+          name: item,
+          value: item,
+        };
+      });
+    setSelectList(optionList);
+  };
 
   const handleClose = () => {
     onClose(false);
@@ -108,7 +125,7 @@ export const UserInfoFormDialog = (props: FormDialogPropsInterface) => {
         {({ values, errors, touched, setFieldValue }) => (
           <Form>
             <Select
-              defaultValue={initValue && initValue.role}
+              defaultValue={role}
               value={role}
               name="role"
               label="Role"
@@ -118,7 +135,8 @@ export const UserInfoFormDialog = (props: FormDialogPropsInterface) => {
                 setFieldValue(e.target.name, e.target.value);
               }}
             >
-              {_.map(selectInitialOptions, (option: any, index: number) => (
+              (
+              {_.map(selectList, (option: any, index: number) => (
                 <MenuItem key={index} value={option.value}>
                   {option.name}
                 </MenuItem>
